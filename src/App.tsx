@@ -12,29 +12,37 @@ function App() {
         {id: 4, title: "RJS", isDone: true},
         {id: 5, title: "RctJS", isDone: false}
     ])
-    const [filter,setFilter]=useState<FilterType>('all')
-
+    const [emptyTasks,setEmptyTasks]=useState<TaskType[]>([])
+    const [nameButton,setNameButton]=useState<'Clean'|'Update'>('Clean')
     const removeTask=(taskId:number)=>{
         setTasks(tasks.filter((el)=>el.id!==taskId))
     }
-    const filteredTasks=(value:FilterType)=>{
-        setFilter(value)
+    const cleanTasks=()=>{
+        setNameButton("Update")
+        setEmptyTasks(tasks)
+        setTasks(emptyTasks)
     }
-    let filterTasks=tasks
-    if (filter === 'active'){
-        filterTasks=tasks.filter(el=>!el.isDone)
-    }
-    if (filter === 'completed'){
-        filterTasks=tasks.filter(el=>el.isDone)
-    }
+    // const [filter,setFilter]=useState<FilterType>('all')
+    // const filteredTasks=(value:FilterType)=>{
+    //     setFilter(value)
+    // }
+    // let filterTasks=tasks
+    // if (filter === 'active'){
+    //     filterTasks=tasks.filter(el=>!el.isDone)
+    // }
+    // if (filter === 'completed'){
+    //     filterTasks=tasks.filter(el=>el.isDone)
+    // }
 
     return (
         <div className="App">
             <Todolist
                 title={"What to learn"}
-                tasks={filterTasks}
+                tasks={tasks}
                 removeTask={removeTask}
-                filteredTasks={filteredTasks}
+                // filteredTasks={filteredTasks}
+                cleanTasks={cleanTasks}
+                nameButton={nameButton}
             />
         </div>
     );

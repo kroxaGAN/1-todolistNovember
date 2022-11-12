@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {FilterType} from "./App";
 
 export type TaskType = {
@@ -11,18 +11,36 @@ type TodolistType = {
     title: string,
     tasks: TaskType[],
     removeTask:(taskId:number)=>void
-    filteredTasks:(value:FilterType)=>void
+    // filteredTasks:(value:FilterType)=>void
+    cleanTasks:()=>void
+    nameButton:string
 }
 
 
 export const Todolist = (props: TodolistType) => {
-    const {title, tasks,removeTask,filteredTasks} = props
+    const {title, tasks,removeTask,cleanTasks, nameButton} = props
+
+    const [filter,setFilter]=useState<FilterType>('all')
+    const filteredTasks=(value:FilterType)=>{
+        setFilter(value)
+    }
+    let filterTasks=tasks
+    if (filter === 'active'){
+        filterTasks=tasks.filter(el=>!el.isDone)
+    }
+    if (filter === 'completed'){
+        filterTasks=tasks.filter(el=>el.isDone)
+    }
+
 
     const delButtonHandler=(taskId:number)=>{
         removeTask(taskId)
     }
     const filterButtonClick=(filterValue:FilterType)=>{
         filteredTasks(filterValue)
+    }
+    const cleanTasksHandler=()=>{
+        cleanTasks()
     }
 
 
@@ -33,9 +51,10 @@ export const Todolist = (props: TodolistType) => {
                 <input/>
                 <button>+</button>
             </div>
+            <button onClick={cleanTasksHandler}>{`${nameButton} tasks`}</button>
             <ul>
                 {
-                    tasks.map((el) => {
+                    filterTasks.map((el) => {
                         return (
                             <li key={el.id}>
                                 <input type="checkbox"
