@@ -43,6 +43,7 @@ function App() {
                 // filteredTasks={filteredTasks}
                 cleanTasks={cleanTasks}
                 nameButton={nameButton}
+                setTasks={setTasks}
             />
         </div>
     );
