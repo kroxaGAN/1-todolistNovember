@@ -17,6 +17,7 @@ type PropsType = {
     changeFilter: (value: FilterValuesType) => void
     addTask: (newTitle: string) => void
     changeCheckBox:(taskId:string,IsDone:boolean)=>void
+    filter:FilterValuesType
 }
 
 export function Todolist(props: PropsType) {
@@ -67,10 +68,11 @@ export function Todolist(props: PropsType) {
                 props.tasks.map(
                     (t) => {
                         return (
-                            <li key={t.id}>
+                            <li key={t.id} className={t.isDone ? "is-done" : ""}>
                                 <input type="checkbox"
                                        checked={t.isDone}
-                                       onChange={(event)=>checkBoxHandler(event,t.id)}/>
+                                       onChange={(event)=>checkBoxHandler(event,t.id)}
+                                />
                                 <span>{t.title}</span>
                                 {/*<button onClick={() =>removeTaskHandler(t.id)}>x</button>*/}
                                 <Button title={'remove'} callback={()=>removeTaskHandler(t.id)}/>
@@ -81,9 +83,13 @@ export function Todolist(props: PropsType) {
             }
         </ul>
         <div>
-            <Button title={"ALL"} callback={()=>changeSuperFilter('all')}/>
-            <Button title={"ACTIVE"} callback={()=>changeSuperFilter('active')}/>
-            <Button title={"COMPLETED"} callback={()=>changeSuperFilter('completed')}/>
+            <Button
+                title={"ALL"}
+                callback={()=>changeSuperFilter('all')}
+                filter={"all"}
+            />
+            <Button title={"ACTIVE"} callback={()=>changeSuperFilter('active')} filter={"active"}/>
+            <Button title={"COMPLETED"} callback={()=>changeSuperFilter('completed')} filter={"completed"}/>
 
 
         </div>
