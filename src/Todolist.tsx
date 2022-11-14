@@ -1,6 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
 import {Button} from "./components/Button";
+import './App.css';
+
 
 type TaskType = {
     id: string
@@ -19,11 +21,18 @@ type PropsType = {
 
 export function Todolist(props: PropsType) {
     const [inputValue, setInputValue] = useState('')
+    const [error,setError]=useState<string | null>(null)
     const addTaskHandler = () => {
-        props.addTask(inputValue)
-        setInputValue('')
+        if (inputValue.trim()!==''){
+            props.addTask(inputValue.trim())
+            setInputValue('')
+        } else {
+            setError('Error')
+        }
+
     }
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setError(null)
         setInputValue(event.currentTarget.value)
     }
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -38,7 +47,6 @@ export function Todolist(props: PropsType) {
         props.changeFilter(value)
     }
     const checkBoxHandler=(event:ChangeEvent<HTMLInputElement>,taskId:string)=>{
-
         props.changeCheckBox(taskId,event.currentTarget.checked)
     }
 
@@ -49,8 +57,10 @@ export function Todolist(props: PropsType) {
                 value={inputValue}
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
+                className={error ? "error":""}
             />
             <Button title={'xXx'} callback={addTaskHandler}/>
+            {error && <div className="error-message">Title is required</div>}
         </div>
         <ul>
             {
