@@ -14,6 +14,6 @@ export const Button=(props:ButtonPropsType)=>{
         props.callback()
     }
     return(
-        <button className={props.filter==='active' ? "active-filter" :""} onClick={onClickHandler}>{props.title} </button>
+        <button className={props.filter===props.title ? "active-filter" :""} onClick={onClickHandler}>{props.title} </button>
     )
 }

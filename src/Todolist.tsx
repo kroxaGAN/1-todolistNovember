@@ -23,6 +23,7 @@ type PropsType = {
 export function Todolist(props: PropsType) {
     const [inputValue, setInputValue] = useState('')
     const [error,setError]=useState<string | null>(null)
+    const [activeButton,setActiveButton]=useState<FilterValuesType>('all')
     const addTaskHandler = () => {
         if (inputValue.trim()!==''){
             props.addTask(inputValue.trim())
@@ -46,6 +47,7 @@ export function Todolist(props: PropsType) {
     }
     const changeSuperFilter=(value:FilterValuesType)=>{
         props.changeFilter(value)
+        setActiveButton(value)
     }
     const checkBoxHandler=(event:ChangeEvent<HTMLInputElement>,taskId:string)=>{
         props.changeCheckBox(taskId,event.currentTarget.checked)
@@ -84,12 +86,12 @@ export function Todolist(props: PropsType) {
         </ul>
         <div>
             <Button
-                title={"ALL"}
+                title={"all"}
                 callback={()=>changeSuperFilter('all')}
-                filter={"all"}
+                filter={activeButton}
             />
-            <Button title={"ACTIVE"} callback={()=>changeSuperFilter('active')} filter={"active"}/>
-            <Button title={"COMPLETED"} callback={()=>changeSuperFilter('completed')} filter={"completed"}/>
+            <Button title={"active"} callback={()=>changeSuperFilter('active')} filter={activeButton}/>
+            <Button title={"completed"} callback={()=>changeSuperFilter('completed')} filter={activeButton}/>
 
 
         </div>
