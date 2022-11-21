@@ -13,7 +13,7 @@ export type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskId: string) => void
+    removeTask: (todolistId:string,taskId: string) => void
     changeFilter: (todolistId:string,value: FilterValuesType) => void
     addTask: (newTitle: string) => void
     changeCheckBox:(taskId:string,IsDone:boolean)=>void
@@ -43,7 +43,7 @@ export function Todolist(props: PropsType) {
         }
     }
     const removeTaskHandler=(taskId:string)=>{
-        props.removeTask(taskId)
+        props.removeTask(props.todolistId,taskId)
     }
     const changeSuperFilter=(value:FilterValuesType)=>{
         props.changeFilter(props.todolistId,value)
