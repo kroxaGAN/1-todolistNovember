@@ -19,6 +19,7 @@ type PropsType = {
     changeCheckBox:(todolistId:string,taskId:string,IsDone:boolean)=>void
     filter:FilterValuesType
     todolistId:string
+    removeTodolists:(todolistId:string)=>void
 }
 
 export function Todolist(props: PropsType) {
@@ -51,9 +52,13 @@ export function Todolist(props: PropsType) {
     const checkBoxHandler=(event:ChangeEvent<HTMLInputElement>,taskId:string)=>{
         props.changeCheckBox(props.todolistId,taskId,event.currentTarget.checked)
     }
+    const rewmoveTodoHandler=()=>{
+        props.removeTodolists(props.todolistId)
+    }
 
     return <div>
         <h3>{props.title}</h3>
+        <button onClick={rewmoveTodoHandler}>DELTODO</button>
         <div>
             <input
                 value={inputValue}
