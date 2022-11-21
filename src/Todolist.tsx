@@ -23,6 +23,7 @@ type PropsType = {
     todolistId:string
     removeTodolists:(todolistId:string)=>void
     editTitleTask:(todolistId:string,taskId:string,title:string)=>void
+    editTodoTitle:(todolistId:string,title:string)=>void
 }
 
 export function Todolist(props: PropsType) {
@@ -45,9 +46,12 @@ export function Todolist(props: PropsType) {
     const updateTaskHandler=(value:string,taskId:string)=>{
         props.editTitleTask(props.todolistId,taskId,value)
     }
+    const updateTodoTitleHandler=(title:string)=>{
+        props.editTodoTitle(props.todolistId,title)
+    }
 
     return <div>
-        <h3>{props.title}</h3>
+        <EditableSpan title={props.title} callback={updateTodoTitleHandler}/>
         <button onClick={rewmoveTodoHandler}>DELTODO</button>
         <AddItemForm title={'ADDTASK'} callback={addTaskCompHandler}/>
         <ul>
