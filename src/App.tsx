@@ -48,8 +48,10 @@ function App() {
         const newTask = {id: v1(), title: newTitle, isDone: false}
         setTasks({...tasks,[todolistId]:[newTask,...tasks[todolistId]]})
     }
-    const changeCheckBox = (taskId: string, IsDone: boolean) => {
-        // setTasks(tasks.map(el => el.id === taskId ? {...el, isDone: IsDone} : el))
+    const changeCheckBox = (todolistId:string,taskId: string, IsDone: boolean) => {
+        setTasks({...tasks,[todolistId]:tasks[todolistId].map(el=>el.id===taskId
+                ?{...el, isDone:IsDone}
+                :el)})
     }
     function changeFilter(todolistId:string,value: FilterValuesType) {
         setTodolists(todolists.map(el=>el.todolistId===todolistId?{...el,filter:value}:el))
