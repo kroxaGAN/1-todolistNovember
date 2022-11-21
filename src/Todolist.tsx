@@ -24,26 +24,7 @@ type PropsType = {
 }
 
 export function Todolist(props: PropsType) {
-    // const [inputValue, setInputValue] = useState('')
-    // const [error,setError]=useState<string | null>(null)
-    // const addTaskHandler = () => {
-    //     if (inputValue.trim()!==''){
-    //         props.addTask(props.todolistId,inputValue.trim())
-    //         setInputValue('')
-    //     } else {
-    //         setError('Error')
-    //     }
-    //
-    // }
-    // const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    //     setError(null)
-    //     setInputValue(event.currentTarget.value)
-    // }
-    // const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    //     if (event.key === 'Enter') {
-    //         addTaskHandler()
-    //     }
-    // }
+
     const removeTaskHandler=(taskId:string)=>{
         props.removeTask(props.todolistId,taskId)
     }
@@ -63,16 +44,6 @@ export function Todolist(props: PropsType) {
     return <div>
         <h3>{props.title}</h3>
         <button onClick={rewmoveTodoHandler}>DELTODO</button>
-        {/*<div>*/}
-        {/*    <input*/}
-        {/*        value={inputValue}*/}
-        {/*        onChange={onChangeHandler}*/}
-        {/*        onKeyPress={onKeyPressHandler}*/}
-        {/*        className={error ? "error":""}*/}
-        {/*    />*/}
-        {/*    <Button title={'xXx'} callback={addTaskHandler}/>*/}
-        {/*    {error && <div className="error-message">Title is required</div>}*/}
-        {/*</div>*/}
         <AddItemForm title={'ADDTASK'} callback={addTaskCompHandler}/>
         <ul>
             {
