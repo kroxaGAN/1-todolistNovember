@@ -1,4 +1,4 @@
-import {Button} from "./Button";
+import {ButtonUniver} from "./ButtonUniver";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type PropsType={
@@ -37,7 +37,8 @@ export const AddItemForm=(props:PropsType)=>{
                 onKeyPress={onKeyPressHandler}
                 className={error ? "error":""}
             />
-            <Button title={props.title} callback={addTaskHandler}/>
+            <ButtonUniver title={props.title} callback={addTaskHandler}/>
+
             {error && <div className="error-message">Title is required</div>}
         </div>
     )
