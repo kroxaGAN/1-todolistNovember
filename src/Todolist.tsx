@@ -4,7 +4,7 @@ import {Button} from "./components/Button";
 import './App.css';
 
 
-type TaskType = {
+export type TaskType = {
     id: string
     title: string
     isDone: boolean
@@ -14,10 +14,11 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (taskId: string) => void
-    changeFilter: (value: FilterValuesType) => void
+    changeFilter: (todolistId:string,value: FilterValuesType) => void
     addTask: (newTitle: string) => void
     changeCheckBox:(taskId:string,IsDone:boolean)=>void
     filter:FilterValuesType
+    todolistId:string
 }
 
 export function Todolist(props: PropsType) {
@@ -45,7 +46,7 @@ export function Todolist(props: PropsType) {
         props.removeTask(taskId)
     }
     const changeSuperFilter=(value:FilterValuesType)=>{
-        props.changeFilter(value)
+        props.changeFilter(props.todolistId,value)
     }
     const checkBoxHandler=(event:ChangeEvent<HTMLInputElement>,taskId:string)=>{
         props.changeCheckBox(taskId,event.currentTarget.checked)
