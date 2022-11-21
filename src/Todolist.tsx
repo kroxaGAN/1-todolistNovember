@@ -1,10 +1,9 @@
 import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
-import {ButtonUniver} from "./components/ButtonUniver";
 import './App.css';
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
-import {IconButton} from "@mui/material";
+import {Button, Checkbox, IconButton} from "@mui/material";
 import {Delete} from '@mui/icons-material'
 
 
@@ -65,9 +64,9 @@ export function Todolist(props: PropsType) {
                     (t) => {
                         return (
                             <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                                <input type="checkbox"
-                                       checked={t.isDone}
-                                       onChange={(event) => checkBoxHandler(event, t.id)}
+                                <Checkbox
+                                    checked={t.isDone}
+                                    onChange={(event) => checkBoxHandler(event, t.id)}
                                 />
                                 <EditableSpan title={t.title} callback={(title) => updateTaskHandler(title, t.id)}/>
                                 <IconButton onClick={() => removeTaskHandler(t.id)}>
@@ -81,16 +80,21 @@ export function Todolist(props: PropsType) {
             }
         </ul>
         <div>
-            <ButtonUniver
-                title={"all"}
-                callback={() => changeSuperFilter('all')}
-                filter={props.filter}
-            />
-            <ButtonUniver title={"active"} callback={() => changeSuperFilter('active')} filter={props.filter}/>
-            <ButtonUniver title={"completed"} callback={() => changeSuperFilter('completed')}
-                          filter={props.filter}/>
-
-
+            <Button
+                variant="text"
+                onClick={() => changeSuperFilter('all')}
+                color={props.filter === 'all'? 'success' : 'secondary'}
+            >all</Button>
+            <Button
+                variant="text"
+                onClick={() => changeSuperFilter('active')}
+                color={props.filter === 'active' ? 'success' : 'secondary'}
+            >active</Button>
+            <Button
+                variant="text"
+                onClick={() => changeSuperFilter('completed')}
+                color={props.filter === 'completed' ? 'success' : 'secondary'}
+            >completed</Button>
         </div>
     </div>
 }

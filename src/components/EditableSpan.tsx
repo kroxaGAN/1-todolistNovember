@@ -1,22 +1,23 @@
 import {ChangeEvent, KeyboardEvent, useState} from "react";
+import {TextField} from "@mui/material";
 
 type PropsType = {
     title: string
-    callback:(title: string)=>void
+    callback: (title: string) => void
 }
 
 export const EditableSpan = (props: PropsType) => {
     const [editActive, setEditActive] = useState(true)
-    const [inputValue,setInputValue]=useState(props.title)
-    const changeTitleHandler=()=>{
-        if (!editActive){
+    const [inputValue, setInputValue] = useState(props.title)
+    const changeTitleHandler = () => {
+        if (!editActive) {
             addTaskHandler()
         }
         setEditActive(!editActive)
     }
 
     const addTaskHandler = () => {
-        if (inputValue.trim()!==''){
+        if (inputValue.trim() !== '') {
             props.callback(inputValue.trim())
             setInputValue('')
         }
@@ -33,12 +34,15 @@ export const EditableSpan = (props: PropsType) => {
     return (
         editActive
             ? <span onDoubleClick={changeTitleHandler}>{props.title}</span>
-            : <input
+            : <TextField
+                id="standard-basic"
+                label="Standard"
+                variant="standard"
                 value={inputValue}
                 onBlur={changeTitleHandler}
                 autoFocus
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
             />
-    )
+)
 }

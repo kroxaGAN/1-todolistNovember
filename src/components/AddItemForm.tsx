@@ -1,5 +1,6 @@
 import {ButtonUniver} from "./ButtonUniver";
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {TextField} from "@mui/material";
 
 type PropsType={
     title:string
@@ -15,7 +16,7 @@ export const AddItemForm=(props:PropsType)=>{
             props.callback(inputValue.trim())
             setInputValue('')
         } else {
-            setError('Error')
+            setError('Title is requered')
         }
 
     }
@@ -31,15 +32,19 @@ export const AddItemForm=(props:PropsType)=>{
 
     return(
         <div>
-            <input
+            <TextField
+                id="outlined-basic"
+                label="title"
+                variant="outlined"
                 value={inputValue}
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
-                className={error ? "error":""}
+                // className={error ? "error":""}
+                error={!!error}
+                helperText={error}
             />
             <ButtonUniver title={props.title} callback={addTaskHandler}/>
 
-            {error && <div className="error-message">Title is required</div>}
         </div>
     )
 }

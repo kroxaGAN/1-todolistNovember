@@ -1,6 +1,7 @@
 import {FilterValuesType} from "../App";
 import '../App.css';
-import {Button} from "@mui/material";
+import { IconButton} from "@mui/material";
+import {AddBox} from "@mui/icons-material";
 
 
 type ButtonPropsType = {
@@ -16,11 +17,19 @@ export const ButtonUniver = (props: ButtonPropsType) => {
     }
     return (
 
-    <Button
-        variant="contained"
-        className={props.filter === props.title ? "active-filter" : ""}
-        onClick={onClickHandler}
-        style={{maxWidth: '100px', maxHeight: '100px', minWidth: '30px', minHeight: '30px', margin: '5px'}}
-    >{props.title}</Button>
+    // <Button
+    //     variant="text"
+    //     onClick={onClickHandler}
+    //     style={{maxWidth: '100px', maxHeight: '100px', minWidth: '30px', minHeight: '30px', margin: '5px'}}
+    //     color={props.filter === props.title ? 'success' : 'secondary'}
+    // >{props.title}</Button>
+        <IconButton
+            onClick={onClickHandler}
+            color={props.filter === props.title ? 'success' : 'secondary'}
+        >
+            <AddBox name={props.title}/>
+        </IconButton>
+
+
 )
 }

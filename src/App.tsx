@@ -3,6 +3,8 @@ import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from "uuid";
 import {AddItemForm} from "./components/AddItemForm";
+import {AppBar, Box, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import {Menu} from "@mui/icons-material";
 
 export type FilterValuesType = "all" | "active" | "completed";
 type TodolistType = {
@@ -79,36 +81,66 @@ function App() {
     }
 
     return (
-        <div className="App">
-            <AddItemForm title={'Add todo'} callback={AddTodolistHandler}/>
-            {
-                todolists.map((el) => {
-                    let tasksForTodolist = tasks[el.todolistId];
+        <div >
 
-                    if (el.filter === "active") {
-                        tasksForTodolist = tasks[el.todolistId].filter(t => !t.isDone);
-                    }
-                    if (el.filter === "completed") {
-                        tasksForTodolist = tasks[el.todolistId].filter(t => t.isDone);
-                    }
-                    return (
-                        <Todolist
-                            key={el.todolistId}
-                            todolistId={el.todolistId}
-                            title={el.title}
-                            tasks={tasksForTodolist}
-                            removeTask={removeTask}
-                            changeFilter={changeFilter}
-                            addTask={addTask}
-                            changeCheckBox={changeCheckBox}
-                            filter={el.filter}
-                            removeTodolists={removeTodolists}
-                            editTitleTask={editTitleTask}
-                            editTodoTitle={editTodoTitle}
-                        />
-                    )
-                })
-            }
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                        >
+                            <Menu />
+                        </IconButton>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                            News
+                        </Typography>
+                        <Button color="inherit">Login</Button>
+                    </Toolbar>
+                </AppBar>
+            </Box>
+            <Container fixed>
+                <Grid container style={{padding:'20px'}}>
+                    <AddItemForm title={'Add todo'} callback={AddTodolistHandler}/>
+                </Grid>
+                <Grid container spacing={3}>
+                    {todolists.map((el) => {
+                            let tasksForTodolist = tasks[el.todolistId];
+
+                            if (el.filter === "active") {
+                                tasksForTodolist = tasks[el.todolistId].filter(t => !t.isDone);
+                            }
+                            if (el.filter === "completed") {
+                                tasksForTodolist = tasks[el.todolistId].filter(t => t.isDone);
+                            }
+                            return (
+                                <Grid item>
+                                    <Paper style={{padding:'10px'}}>
+                                        <Todolist
+                                            key={el.todolistId}
+                                            todolistId={el.todolistId}
+                                            title={el.title}
+                                            tasks={tasksForTodolist}
+                                            removeTask={removeTask}
+                                            changeFilter={changeFilter}
+                                            addTask={addTask}
+                                            changeCheckBox={changeCheckBox}
+                                            filter={el.filter}
+                                            removeTodolists={removeTodolists}
+                                            editTitleTask={editTitleTask}
+                                            editTodoTitle={editTodoTitle}
+                                        />
+                                    </Paper>
+                                </Grid>
+                            )
+                        })}
+                </Grid>
+
+            </Container>
+
         </div>
     );
 }
