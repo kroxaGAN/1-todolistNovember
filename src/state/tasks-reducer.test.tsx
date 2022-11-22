@@ -1,6 +1,7 @@
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer'
 import {TasksForTodolistType, TodolistType} from '../App'
-import {AddTodolistAC, RemoveTodolistAC, todolistReducer} from "./todolists-reducer";
+import {AddTodolistAC, RemoveTodolistAC, todolistsReducer} from "./todolists-reducer";
+import {v1} from "uuid";
 
 let startState: TasksForTodolistType
 beforeEach(() => {
@@ -66,8 +67,8 @@ test('title of specified task should be changed', () => {
     expect(endState['todolistId1'][1].title).toBe('JS')
 })
 test('new array should be added when new todolist is added', () => {
-
-    const action = AddTodolistAC('new todolist')
+    const todolistId=v1()
+    const action = AddTodolistAC(todolistId,'new todolist')
 
     const endState = tasksReducer(startState, action)
 
@@ -84,11 +85,12 @@ test('new array should be added when new todolist is added', () => {
 test('ids should be equals', () => {
     const startTasksState: TasksForTodolistType = {}
     const startTodolistsState: Array<TodolistType> = []
+    const todolistId=v1()
 
-    const action = AddTodolistAC('new todolist')
+    const action = AddTodolistAC(todolistId,'new todolist')
 
     const endTasksState = tasksReducer(startTasksState, action)
-    const endTodolistsState = todolistReducer(startTodolistsState, action)
+    const endTodolistsState = todolistsReducer(startTodolistsState, action)
 
     const keys = Object.keys(endTasksState)
     const idFromTasks = keys[0]
