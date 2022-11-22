@@ -1,7 +1,9 @@
 import {TasksForTodolistType} from "../App";
+import {AddTodolistACType, RemoveTodolistACType} from "./todolists-reducer";
 
 type ActionType = removeTaskACType | addTaskACType
     | changeTaskStatusACType | changeTaskTitleACType
+    | AddTodolistACType | RemoveTodolistACType
 export const tasksReducer = (state: TasksForTodolistType, action: ActionType) => {
     switch (action.type) {
         case 'REMOVE-TASK': {
@@ -15,13 +17,26 @@ export const tasksReducer = (state: TasksForTodolistType, action: ActionType) =>
         }
         case "CHANGE-TASK-STATUS": {
             let stateCopy = {...state}
-            return {...stateCopy,[action.todolistId]:stateCopy[action.todolistId].map(el=>
-                el.id===action.id ? {...el,isDone:action.isDone}:el)}
+            return {
+                ...stateCopy, [action.todolistId]: stateCopy[action.todolistId].map(el =>
+                    el.id === action.id ? {...el, isDone: action.isDone} : el)
+            }
         }
-        case "CHANGE-TITLE-TASK":{
-            let stateCopy={...state}
-            return {...stateCopy,[action.todolistId]:stateCopy[action.todolistId].map(el=>
-                el.id===action.id ? {...el, title:action.title} :el)}
+        case "CHANGE-TITLE-TASK": {
+            let stateCopy = {...state}
+            return {
+                ...stateCopy, [action.todolistId]: stateCopy[action.todolistId].map(el =>
+                    el.id === action.id ? {...el, title: action.title} : el)
+            }
+        }
+        case "ADD-TODOLIST":{
+            const stateCopy={...state}
+            return {...stateCopy,[action.todolistId]:[]}
+        }
+        case "REMOVE-TODOLIST":{
+            const stateCopy={...state}
+            delete stateCopy[action.id]
+            return stateCopy
         }
         default:
             throw new Error('I don\'t understand this type')
@@ -52,10 +67,10 @@ export const changeTaskStatusAC = (id: string, isDone: boolean, todolistId: stri
     } as const
 }
 
-type changeTaskTitleACType=ReturnType<typeof changeTaskTitleAC>
-export const changeTaskTitleAC=(id: string, title: string, todolistId: string)=>{
-    return{
-        type:'CHANGE-TITLE-TASK',
-        id,title,todolistId
-    }as const
+type changeTaskTitleACType = ReturnType<typeof changeTaskTitleAC>
+export const changeTaskTitleAC = (id: string, title: string, todolistId: string) => {
+    return {
+        type: 'CHANGE-TITLE-TASK',
+        id, title, todolistId
+    } as const
 }

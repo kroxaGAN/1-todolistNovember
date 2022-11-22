@@ -11,7 +11,7 @@ export const todolistReducer = (state: TodolistType[], action: ActionType) => {
         }
         case 'ADD-TODOLIST': {
             let copyState = [...state]
-            const newTodolist = {todolistId: v1(), title: action.title, filter: 'all'}
+            const newTodolist = {todolistId: action.todolistId, title: action.title, filter: 'all'}
             return [...copyState, newTodolist]
         }
         case 'CHANGE-TODOLIST-TITLE': {
@@ -31,7 +31,7 @@ export const todolistReducer = (state: TodolistType[], action: ActionType) => {
     }
 }
 
-type RemoveTodolistACType=ReturnType<typeof RemoveTodolistAC>
+export type RemoveTodolistACType=ReturnType<typeof RemoveTodolistAC>
 export const RemoveTodolistAC=(id:string)=>{
     return{
         type:'REMOVE-TODOLIST',
@@ -39,11 +39,12 @@ export const RemoveTodolistAC=(id:string)=>{
     }as const
 }
 
-type AddTodolistACType=ReturnType<typeof AddTodolistAC>
+export type AddTodolistACType=ReturnType<typeof AddTodolistAC>
 export const AddTodolistAC=(title:string)=>{
+    const todolistId=v1()
     return{
         type:'ADD-TODOLIST',
-        title
+        title, todolistId
     }as const
 }
 
