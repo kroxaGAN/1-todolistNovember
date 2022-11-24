@@ -1,6 +1,7 @@
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer'
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasksReducer'
 import {TasksForTodolistType, TodolistType} from '../App'
-import {AddTodolistAC, RemoveTodolistAC, todolistReducer} from "./todolists-reducer";
+import {AddTodolistAC, RemoveTodolistAC, TodolistReducer} from "./todolistReducer";
+import {v1} from "uuid";
 
 test('correct task should be deleted from correct array', () => {
     const startState: TasksForTodolistType = {
@@ -111,8 +112,8 @@ test('new array should be added when new todolist is added', () => {
             {id: '3', title: 'tea', isDone: false}
         ]
     }
-
-    const action = AddTodolistAC('new todolist')
+    const todolistId=v1()
+    const action = AddTodolistAC(todolistId,'new todolist')
 
     const endState = tasksReducer(startState, action)
 
@@ -130,10 +131,11 @@ test('ids should be equals', () => {
     const startTasksState: TasksForTodolistType = {}
     const startTodolistsState: Array<TodolistType> = []
 
-    const action = AddTodolistAC('new todolist')
+    const todolistId=v1()
+    const action = AddTodolistAC(todolistId,'new todolist')
 
     const endTasksState = tasksReducer(startTasksState, action)
-    const endTodolistsState = todolistReducer(startTodolistsState, action)
+    const endTodolistsState = TodolistReducer(startTodolistsState, action)
 
     const keys = Object.keys(endTasksState)
     const idFromTasks = keys[0]

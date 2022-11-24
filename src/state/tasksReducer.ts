@@ -1,5 +1,5 @@
 import {TasksForTodolistType} from "../App";
-import {AddTodolistACType, RemoveTodolistACType} from "./todolists-reducer";
+import {AddTodolistACType, RemoveTodolistACType} from "./todolistReducer";
 
 type ActionType = removeTaskACType | addTaskACType
     | changeTaskStatusACType | changeTaskTitleACType
