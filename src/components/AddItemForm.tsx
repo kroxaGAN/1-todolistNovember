@@ -1,5 +1,5 @@
 import {ButtonUniver} from "./ButtonUniver";
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import {TextField} from "@mui/material";
 
 type PropsType={
@@ -7,7 +7,8 @@ type PropsType={
     callback:(title:string)=>void
 }
 
-export const AddItemForm=(props:PropsType)=>{
+export const AddItemForm=memo((props:PropsType)=>{
+    console.log('AddItemForm')
     const [inputValue, setInputValue] = useState('')
     const [error,setError]=useState<string | null>(null)
     const addTaskHandler = () => {
@@ -47,4 +48,4 @@ export const AddItemForm=(props:PropsType)=>{
 
         </div>
     )
-}
+})
