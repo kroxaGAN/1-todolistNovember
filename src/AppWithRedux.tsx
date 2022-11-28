@@ -110,7 +110,7 @@ function AppWithRedux() {
                 <Grid container style={{padding:'20px'}}>
                     <AddItemForm title={'Add todo'} callback={AddTodolistHandler}/>
                 </Grid>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} >
                     {todolists.map((el:TodolistType) => {
                             let tasksForTodolist = tasks[el.todolistId];
 
@@ -121,10 +121,10 @@ function AppWithRedux() {
                                 tasksForTodolist = tasks[el.todolistId].filter(t => t.isDone);
                             }
                             return (
-                                <Grid item>
+                                <Grid item key={el.todolistId}>
                                     <Paper style={{padding:'10px'}}>
                                         <Todolist
-                                            key={el.todolistId}
+
                                             todolistId={el.todolistId}
                                             title={el.title}
                                             tasks={tasksForTodolist}

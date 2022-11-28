@@ -1,9 +1,12 @@
 import {FilterValuesType} from "../AppWithReducers"
+import {TodolistType} from "../AppWithRedux";
 
 type ActionType = RemoveTodolistACType | AddTodolistACType
 |ChangeTodolistTitleACType | ChangeTodolistFilterACType
 
-export const todolistsReducer = (state: any, action: ActionType) => {
+const initialState:TodolistType[]=[]
+
+export const todolistsReducer = (state=initialState, action: ActionType):TodolistType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             let copyState = [...state]
@@ -11,7 +14,7 @@ export const todolistsReducer = (state: any, action: ActionType) => {
         }
         case 'ADD-TODOLIST': {
             let copyState = [...state]
-            const newTodolist = {todolistId: action.todolistId, title: action.title, filter: 'all'}
+            const newTodolist:TodolistType = {todolistId: action.todolistId, title: action.title, filter: 'all'}
             return [newTodolist,...copyState]
         }
         case 'CHANGE-TODOLIST-TITLE': {
@@ -27,7 +30,7 @@ export const todolistsReducer = (state: any, action: ActionType) => {
                 : el)
         }
         default:
-            throw new Error('I don\'t understand this type')
+            return state
     }
 }
 
