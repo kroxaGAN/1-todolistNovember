@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback} from 'react';
+import React, {ChangeEvent, memo, useCallback} from 'react';
 import {FilterValuesType} from './App';
 import './App.css';
 import {AddItemForm} from "./components/AddItemForm";
@@ -27,14 +27,15 @@ type PropsType = {
     editTodoTitle: (todolistId: string, title: string) => void
 }
 
-export function Todolist(props: PropsType) {
+export const Todolist= memo((props: PropsType)=> {
+    // console.log('Todolist')
 
     const removeTaskHandler = (taskId: string) => {
         props.removeTask(props.todolistId, taskId)
     }
-    const changeSuperFilter = (value: FilterValuesType) => {
+    const changeSuperFilter = useCallback((value: FilterValuesType) => {
         props.changeFilter(props.todolistId, value)
-    }
+    },[props.changeFilter,props.todolistId])
     const checkBoxHandler = (event: ChangeEvent<HTMLInputElement>, taskId: string) => {
         props.changeCheckBox(props.todolistId, taskId, event.currentTarget.checked)
     }
@@ -44,11 +45,20 @@ export function Todolist(props: PropsType) {
     const addTaskCompHandler = useCallback((title: string) => {
         props.addTask(props.todolistId, title)
     },[props.addTask, props.todolistId])
-    const updateTaskHandler = (value: string, taskId: string) => {
+    const updateTaskHandler = useCallback((value: string, taskId: string) => {
         props.editTitleTask(props.todolistId, taskId, value)
-    }
-    const updateTodoTitleHandler = (title: string) => {
+    },[props.editTitleTask,props.todolistId])
+    const updateTodoTitleHandler = useCallback((title: string) => {
         props.editTodoTitle(props.todolistId, title)
+    },[props.editTodoTitle,props.todolistId])
+
+    let tasksForTodolist = props.tasks;
+
+    if (props.filter === "active") {
+        tasksForTodolist = props.tasks.filter(t => !t.isDone);
+    }
+    if (props.filter === "completed") {
+        tasksForTodolist = props.tasks.filter(t => t.isDone);
     }
 
     return <div>
@@ -60,7 +70,7 @@ export function Todolist(props: PropsType) {
         <AddItemForm title={'ADDTASK'} callback={addTaskCompHandler}/>
         <ul>
             {
-                props.tasks.map(
+                tasksForTodolist.map(
                     (t) => {
                         return (
                             <li key={t.id} className={t.isDone ? "is-done" : ""}>
@@ -97,4 +107,4 @@ export function Todolist(props: PropsType) {
             >completed</Button>
         </div>
     </div>
-}
+})

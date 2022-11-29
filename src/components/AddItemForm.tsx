@@ -8,7 +8,7 @@ type PropsType = {
 }
 
 export const AddItemForm = memo((props: PropsType) => {
-    console.log('AddItemForm')
+    // console.log('AddItemForm')
     const [inputValue, setInputValue] = useState('')
     const [error, setError] = useState<string | null>(null)
     const addTaskHandler = () => {
