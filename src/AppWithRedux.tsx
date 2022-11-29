@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from "uuid";
@@ -60,9 +60,9 @@ function AppWithRedux() {
     function removeTask(todolistId:string,taskId: string) {
         dispatch(removeTaskAC(taskId,todolistId))
     }
-    const addTask = (todolistId:string,newTitle: string) => {
+    const addTask = useCallback((todolistId:string,newTitle: string) => {
         dispatch(addTaskAC(newTitle,todolistId))
-    }
+    },[dispatch])
     const changeCheckBox = (todolistId:string,taskId: string, IsDone: boolean) => {
         dispatch(changeTaskStatusAC(taskId,IsDone,todolistId))
     }
@@ -72,10 +72,10 @@ function AppWithRedux() {
     const removeTodolists=(todolistId:string)=>{
         dispatch(RemoveTodolistAC(todolistId))
     }
-    const AddTodolistHandler=(title:string)=>{
+    const AddTodolistHandler= useCallback((title:string)=>{
         const todolistId=v1();
         dispatch(AddTodolistAC(todolistId,title))
-    }
+    },[dispatch])
     const editTitleTask=(todolistId:string,taskId: string,title:string)=>{
         dispatch(changeTaskTitleAC(taskId,title,todolistId))
     }

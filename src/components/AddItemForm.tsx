@@ -1,17 +1,18 @@
 import {ButtonUniver} from "./ButtonUniver";
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import {TextField} from "@mui/material";
 
-type PropsType={
-    title:string
-    callback:(title:string)=>void
+type PropsType = {
+    title: string
+    callback: (title: string) => void
 }
 
-export const AddItemForm=(props:PropsType)=>{
+export const AddItemForm = memo((props: PropsType) => {
+    console.log('AddItemForm')
     const [inputValue, setInputValue] = useState('')
-    const [error,setError]=useState<string | null>(null)
+    const [error, setError] = useState<string | null>(null)
     const addTaskHandler = () => {
-        if (inputValue.trim()!==''){
+        if (inputValue.trim() !== '') {
             // props.addTask(props.todolistId,inputValue.trim())
             props.callback(inputValue.trim())
             setInputValue('')
@@ -21,7 +22,9 @@ export const AddItemForm=(props:PropsType)=>{
 
     }
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
+        if (error !== null) {
+            setError(null)
+        }
         setInputValue(event.currentTarget.value)
     }
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -30,7 +33,7 @@ export const AddItemForm=(props:PropsType)=>{
         }
     }
 
-    return(
+    return (
         <div>
             <TextField
                 id="outlined-basic"
@@ -47,4 +50,4 @@ export const AddItemForm=(props:PropsType)=>{
 
         </div>
     )
-}
+})
