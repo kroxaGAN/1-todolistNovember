@@ -1,10 +1,11 @@
-import React, {ChangeEvent, memo, useCallback} from 'react';
+import React, {memo, useCallback} from 'react';
 import {FilterValuesType} from './App';
 import './App.css';
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
-import {Button, Checkbox, IconButton} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
 import {Delete} from '@mui/icons-material'
+import {Task} from "./components/Task";
 
 
 export type TaskType = {
@@ -30,15 +31,15 @@ type PropsType = {
 export const Todolist= memo((props: PropsType)=> {
     // console.log('Todolist')
 
-    const removeTaskHandler = (taskId: string) => {
+    const removeTaskHandler = useCallback((taskId: string) => {
         props.removeTask(props.todolistId, taskId)
-    }
+    },[props.removeTask,props.todolistId])
     const changeSuperFilter = useCallback((value: FilterValuesType) => {
         props.changeFilter(props.todolistId, value)
     },[props.changeFilter,props.todolistId])
-    const checkBoxHandler = (event: ChangeEvent<HTMLInputElement>, taskId: string) => {
-        props.changeCheckBox(props.todolistId, taskId, event.currentTarget.checked)
-    }
+    const checkBoxHandler = useCallback((taskId: string, IsDone: boolean) => {
+        props.changeCheckBox(props.todolistId, taskId, IsDone)
+    },[props.changeCheckBox,props.todolistId])
     const rewmoveTodoHandler = () => {
         props.removeTodolists(props.todolistId)
     }
@@ -72,19 +73,12 @@ export const Todolist= memo((props: PropsType)=> {
             {
                 tasksForTodolist.map(
                     (t) => {
-                        return (
-                            <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                                <Checkbox
-                                    checked={t.isDone}
-                                    onChange={(event) => checkBoxHandler(event, t.id)}
-                                />
-                                <EditableSpan title={t.title} callback={(title) => updateTaskHandler(title, t.id)}/>
-                                <IconButton onClick={() => removeTaskHandler(t.id)}>
-                                    <Delete/>
-                                </IconButton>
-
-                            </li>
-                        )
+                        return <Task
+                            task={t}
+                            editTitleTask={updateTaskHandler}
+                            removeTask={removeTaskHandler}
+                            changeCheckBox={checkBoxHandler}
+                        />
                     }
                 )
             }
