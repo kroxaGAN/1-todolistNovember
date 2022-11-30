@@ -45,7 +45,7 @@ export const AddItemForm = memo((props: PropsType) => {
                 // className={error ? "error":""}
                 error={!!error}
                 helperText={error}
-            />
+            /> 1
             <ButtonUniver title={props.title} callback={addTaskHandler}/>
 
         </div>
