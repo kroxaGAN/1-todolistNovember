@@ -26,33 +26,7 @@ export type TasksForTodolistType = {
 }
 
 function AppWithRedux() {
-    // const todolistId1 = v1();
-    // const todolistId2 = v1();
-    //
-    // let [todolists, dispatchToTodolists] = useReducer(todolistsReducer,[
-    //     {todolistId: todolistId1, title: 'What to learn', filter: "all"},
-    //     {todolistId: todolistId2, title: 'What to buy', filter: "all"},
-    // ])
-    //
-    //
-    // let [tasks, dispatchToTasks] = useReducer(tasksReducer,
-    //     {
-    //         [todolistId1]: [
-    //             {id: v1(), title: "HTML&CSS", isDone: true},
-    //             {id: v1(), title: "JS", isDone: true},
-    //             {id: v1(), title: "ReactJS", isDone: false},
-    //             {id: v1(), title: "Rest API", isDone: true},
-    //             {id: v1(), title: "GraphQL", isDone: false},
-    //         ],
-    //         [todolistId2]: [
-    //             {id: v1(), title: "HTML&CSS2", isDone: true},
-    //             {id: v1(), title: "JS2", isDone: true},
-    //             {id: v1(), title: "ReactJS2", isDone: false},
-    //             {id: v1(), title: "Rest API2", isDone: false},
-    //             {id: v1(), title: "GraphQL2", isDone: true},
-    //         ],
-    //     }
-    // );
+
     const todolists = useSelector<AppRootStateType,TodolistType[]>(state=>state.todolists)
     const tasks=useSelector<AppRootStateType,TasksForTodolistType>(state=>state.tasks)
     const dispatch=useDispatch()
