@@ -5,7 +5,6 @@ import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from '@mui/icons-material'
-import {Task} from "./components/Task";
 import {TaskWithRedux} from "./components/TaskWithRedux";
 
 
@@ -76,12 +75,6 @@ export const Todolist= memo((props: PropsType)=> {
                     (t) => {
                         return (
                             <>
-                                {/*<Task*/}
-                                {/*    task={t}*/}
-                                {/*    editTitleTask={updateTaskHandler}*/}
-                                {/*    removeTask={removeTaskHandler}*/}
-                                {/*    changeCheckBox={checkBoxHandler}*/}
-                                {/*/>*/}
                                 <TaskWithRedux task={t} todolistId={props.todolistId}/>
                             </>
                             )
