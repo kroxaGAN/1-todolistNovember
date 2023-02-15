@@ -1,13 +1,16 @@
 import {FilterValuesType} from "../AppWithReducers"
-import {TodolistType} from "../AppWithRedux";
+import {TodolistDomainType, TodolistType} from "../AppWithRedux";
 
 type ActionType = RemoveTodolistACType | AddTodolistACType
-|ChangeTodolistTitleACType | ChangeTodolistFilterACType
+|ChangeTodolistTitleACType | ChangeTodolistFilterACType | FetchTodolistsActionType
 
-const initialState:TodolistType[]=[]
+const initialState:TodolistDomainType[]=[]
 
 export const todolistsReducer = (state=initialState, action: ActionType):TodolistType[] => {
     switch (action.type) {
+        case "FETCH-TODOLISTS":{
+            return action.todolists
+        }
         case 'REMOVE-TODOLIST': {
             let copyState = [...state]
             return copyState.filter(el => el.todolistId !== action.id)
@@ -63,5 +66,12 @@ export const ChangeTodolistFilterAC=(id:string,filter:FilterValuesType)=>{
     return{
         type:'CHANGE-TODOLIST-FILTER',
         id,filter
+    }as const
+}
+
+export type FetchTodolistsActionType=ReturnType<typeof FetchTodolistsAC>
+export const FetchTodolistsAC=(todolists:TodolistDomainType[])=>{
+    return {
+        type:"FETCH-TODOLISTS", todolists
     }as const
 }

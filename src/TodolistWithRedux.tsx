@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react';
+import React, {memo, useCallback, useEffect} from 'react';
 import {FilterValuesType} from './App';
 import './App.css';
 import {AddItemForm} from "./components/AddItemForm";
@@ -28,6 +28,10 @@ export const TodolistWithRedux= memo(({todolist}: PropsType)=> {
     const {todolistId,title,filter}=todolist
     let tasks=useSelector<AppRootStateType,TaskType[]>(state=>state.tasks[todolistId])
     const dispatch=useDispatch()
+
+    useEffect(()=>{
+
+    },[])
 
     // const removeTaskHandler = useCallback((taskId: string) => {
     //     dispatch(removeTaskAC(taskId,todolistId))
@@ -72,7 +76,7 @@ export const TodolistWithRedux= memo(({todolist}: PropsType)=> {
                     (t) => {
                         return (
                             <>
-                                <TaskWithRedux task={t} todolistId={todolistId}/>
+                                <TaskWithRedux key={t.id} task={t} todolistId={todolistId} />
                             </>
                             )
 

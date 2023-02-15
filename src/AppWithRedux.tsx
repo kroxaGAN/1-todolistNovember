@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {TaskType} from './Todolist';
 import {v1} from "uuid";
@@ -6,11 +6,13 @@ import {AddItemForm} from "./components/AddItemForm";
 import {AppBar, Box, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {
-    AddTodolistAC,
+    AddTodolistAC, FetchTodolistsAC,
 } from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TodolistWithRedux} from "./TodolistWithRedux";
+import axios from "axios";
+import {todolistAPI} from "./state/todolistAPI";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -18,14 +20,27 @@ export type TodolistType = {
     title: string,
     filter: FilterValuesType
 }
+export type TodolistDomainType=TodolistType & {
+    addedDate:string,
+    order:number
+}
 export type TasksForTodolistType = {
     [key: string]: TaskType[]
 }
+
 
 function AppWithRedux() {
 
     const todolists = useSelector<AppRootStateType,TodolistType[]>(state=>state.todolists)
     const dispatch=useDispatch()
+
+    useEffect(()=>{
+        todolistAPI.getTodolists()
+                .then((res)=>{
+                console.log(res.data)
+                    dispatch(FetchTodolistsAC(res.data))
+            })
+    },[])
 
 
     const AddTodolistHandler= useCallback((title:string)=>{
